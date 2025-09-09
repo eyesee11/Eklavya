@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../core/constants/app_constants.dart';
-import '../shared/theme/app_theme.dart';
+import '../shared/theme/athletic_theme.dart';
 import '../shared/widgets/app_error_widget.dart';
-import 'routes.dart';
+import '../shared/widgets/optional_screen_loader.dart';
+import '../features/navigation/main_navigation_container.dart';
 
 /// Main application widget
 class SportsAssessmentApp extends StatelessWidget {
@@ -16,13 +17,13 @@ class SportsAssessmentApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       
       // Theme configuration
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.system,
+      theme: AthleticTheme.athleticTheme,
+      themeMode: ThemeMode.dark,
       
-      // Routing
-      onGenerateRoute: AppRoutes.onGenerateRoute,
-      initialRoute: AppRoutes.splash,
+      // Home page with optional 5-second screen loader
+      home: const OptionalScreenLoader(
+        child: MainNavigationContainer(),
+      ),
       
       // Error handling
       builder: (context, widget) {

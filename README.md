@@ -13,3 +13,12 @@ using tensorflow moduels in mediapipe to make somthing like blazepose: https://b
 Weiyu Zhang, Menglong Zhu and Konstantinos Derpanis, "From Actemes to Action: 
 A Strongly-supervised Representation for Detailed Action Understanding"
 International Conference on Computer Vision (ICCV). Dec 2013.
+
+
+# Annotation Tool
+http://dreamdragon.github.io/vatic/
+
+# Datasets
+https://www.cis.upenn.edu/~kostas/Penn_Action.tar.gz
+
+https://www.kaggle.com/datasets/ipythonx/k4testset/data

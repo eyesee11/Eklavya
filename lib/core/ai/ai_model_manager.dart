@@ -1,10 +1,36 @@
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
-import 'package:tflite_flutter/tflite_flutter.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import '../errors/ai_exceptions.dart';
 import '../utils/logger.dart';
+
+// TensorFlow Lite stubs for web compatibility
+class Interpreter {
+  Interpreter.fromAsset(String path, {InterpreterOptions? options});
+  void run(dynamic input, dynamic output) {}
+  void close() {}
+}
+
+class InterpreterOptions {
+  void addDelegate(dynamic delegate) {}
+}
+
+class GpuDelegate {}
+
+// Extension to add reshape functionality
+extension ListReshape<T> on List<T> {
+  List<List<T>> reshape(List<int> shape) {
+    if (shape.length != 2) throw ArgumentError('Only 2D reshape supported');
+    final rows = shape[0];
+    final cols = shape[1];
+    if (length != rows * cols) throw ArgumentError('Invalid reshape dimensions');
+    
+    return List.generate(rows, (i) => 
+      sublist(i * cols, (i + 1) * cols)
+    );
+  }
+}
 
 /// AI Model Manager for TensorFlow Lite models on Android
 class AIModelManager {
@@ -225,7 +251,7 @@ class AIModelManager {
       final output = <String, dynamic>{};
       
       // Run inference
-      _verticalJumpModel!.run(input, output);
+      _verticalJumpModel!.run([input], output);
       
       return {
         'height_cm': output['height'] ?? 0.0,

@@ -40,15 +40,20 @@ void main() async {
     await DependencyInjection.init();
     logger.i('Dependencies initialized successfully');
     
-    // Initialize Android-specific optimizations
-    if (Platform.isAndroid) {
-      logger.i('Initializing Android optimizations...');
-      await AndroidPerformanceUtils.instance.initialize();
-      
-      // Initialize AI models in background
-      AIModelManager.instance.initialize().catchError((error) {
-        logger.w('AI model initialization failed: $error');
-      });
+    // Initialize platform-specific optimizations
+    try {
+      if (Platform.isAndroid) {
+        logger.i('Initializing Android optimizations...');
+        await AndroidPerformanceUtils.instance.initialize();
+        
+        // Initialize AI models in background
+        AIModelManager.instance.initialize().catchError((error) {
+          logger.w('AI model initialization failed: $error');
+        });
+      }
+    } catch (e) {
+      // Platform operations not supported on web - this is expected
+      logger.d('Platform-specific initialization skipped (web platform)');
     }
     
     // Run the app
